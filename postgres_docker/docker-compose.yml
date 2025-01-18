@@ -5,6 +5,7 @@ services:
     image: postgres:16-alpine
     restart: always
     shm_size: 128mb
+    container_name: trainings_tracker_postgres
     environment:
       - POSTGRES_PASSWORD=trainings_admin
       - POSTGRES_DB=trainings_tracker
@@ -12,8 +13,9 @@ services:
       - "5433:5432"
     volumes:
       - trainings_tracker_data:/var/lib/postgresql/data
-      - src/main/resources/schema_init.sql:/docker-entrypoint-initdb.d/init.sql
+      - ./schema_init.sql:/docker-entrypoint-initdb.d/init.sql
 
+  # for web-interface of database
   # adminer:
   #   image: adminer
   #   restart: always

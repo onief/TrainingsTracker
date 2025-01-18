@@ -1,0 +1,26 @@
+version: '3.9'
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    restart: always
+    shm_size: 128mb
+    container_name: trainings_tracker_postgres
+    environment:
+      - POSTGRES_PASSWORD=trainings_admin
+      - POSTGRES_DB=trainings_tracker
+    ports:
+      - "5433:5432"
+    volumes:
+      - trainings_tracker_data:/var/lib/postgresql/data
+      - ./schema_init.sql:/docker-entrypoint-initdb.d/init.sql
+
+  # for web-interface of database
+  # adminer:
+  #   image: adminer
+  #   restart: always
+  #   ports:
+  #     - 8081:8080
+
+volumes:
+  trainings_tracker_data: 

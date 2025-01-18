@@ -1,0 +1,12 @@
+### Get All Exercises
+GET localhost:8080/api/exercise
+
+### Get Exercise by ID
+GET localhost:8080/api/exercise/1
+
+### Get Exercise by ID that does't exist
+GET localhost:8080/api/exercise/1000
+
+### Get Exercise by Name
+GET localhost:8080/api/exercise/lat_pulldown_close
+

@@ -1,7 +1,5 @@
 package uni.mainz.TrainingsTracker.dto;
 
-import uni.mainz.TrainingsTracker.model.Set;
-
 import java.util.List;
 import java.util.Map;
 

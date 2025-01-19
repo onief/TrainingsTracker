@@ -1,4 +1,4 @@
-package uni.mainz.TrainingsTracker.model;
+package uni.mainz.TrainingsTracker.dto;
 
 public record ExerciseRequest(
 

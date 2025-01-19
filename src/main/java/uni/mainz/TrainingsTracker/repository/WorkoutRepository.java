@@ -4,8 +4,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.jdbc.core.simple.JdbcClient;
 import org.springframework.stereotype.Repository;
-import uni.mainz.TrainingsTracker.model.WorkoutRequest;
-import uni.mainz.TrainingsTracker.model.WorkoutResponse;
+import uni.mainz.TrainingsTracker.dto.WorkoutRequest;
+import uni.mainz.TrainingsTracker.dto.WorkoutResponse;
 import uni.mainz.TrainingsTracker.model.WorkoutType;
 
 import java.sql.Date;
@@ -23,35 +23,59 @@ public class WorkoutRepository {
     }
 
     public List<WorkoutResponse> getAll() {
-        return null;
+        return jdbcClient
+                .sql("select * from workout")
+                .query(WorkoutResponse.class)
+                .list();
     }
 
     public Optional<WorkoutResponse> getById(int id) {
-        return null;
+        return jdbcClient
+                .sql("select * from workout where id = :id")
+                .param("id", id)
+                .query(WorkoutResponse.class)
+                .optional();
     }
 
     public List<WorkoutResponse> getByParams(Date date) {
-        return null;
+        return jdbcClient
+                .sql("select * from workout where workout.date = :date")
+                .param("date", date)
+                .query(WorkoutResponse.class)
+                .list();
     }
 
-    public List<WorkoutResponse> getByParams(WorkoutType workoutType) {
-        return null;
+    public List<WorkoutResponse> getByParams(WorkoutType type) {
+        LOGGER.info(type.toString());
+        return jdbcClient
+                .sql("select * from workout where workout.type = :type")
+                .param("type", type.toString())
+                .query(WorkoutResponse.class)
+                .list();
     }
 
     public List<WorkoutResponse> getByParams(Date date, WorkoutType workoutType) {
-        return null;
+
+        return jdbcClient
+                .sql("select * from workout where workout.date = ? and workout.type = ?")
+                .params(List.of(date, workoutType.toString()))
+                .query(WorkoutResponse.class)
+                .list();
     }
 
-    public boolean create(WorkoutRequest workoutRequest) {
-        return false;
+    public int create(WorkoutRequest workoutRequest) {
+        return 1;
     }
 
-    public boolean update(WorkoutRequest workoutRequest, int id) {
-        return false;
+    public int update(WorkoutRequest workoutRequest, Integer id) {
+        return jdbcClient
+                .sql("update workout set date = ?, type = ? where id = ?")
+                .params(List.of(workoutRequest.date(), workoutRequest.type().toString(), id))
+                .update();
     }
 
-    public boolean delete(int id) {
-        return false;
+    public int delete(int id) {
+        return 1;
     }
 
 }

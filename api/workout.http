@@ -1,0 +1,47 @@
+### Get All Workouts
+GET localhost:8080/api/workout
+
+### Get First Workout
+GET localhost:8080/api/workout/1
+
+### Get Workouts by date
+GET localhost:8080/api/workout?date=2025-01-13
+
+### Get Workouts by type
+GET localhost:8080/api/workout?type=PULL
+
+### Get Workouts by type and date
+GET localhost:8080/api/workout?date=2025-01-13&&type=PULL
+
+### Get Workouts by not existing returns only empty
+GET localhost:8080/api/workout?date=2024-01-12
+
+### Post single Workout is not allowed
+POST localhost:8080/api/workout
+Content-Type: application/json
+
+{
+  "date": "2025-01-19",
+  "type": "LEGS"
+}
+
+### Update Workout Date
+PUT localhost:8080/api/workout/1
+Content-Type: application/json
+
+{
+  "date": "2025-01-13",
+  "type": "PULL"
+}
+
+### Update Workout that doesn't exist
+PUT localhost:8080/api/workout/10000000
+Content-Type: application/json
+
+{
+  "date": "2025-01-19",
+  "type": "LEGS"
+}
+
+### Delete single Workout is not allowed
+DELETE localhost:8080/api/workout/1

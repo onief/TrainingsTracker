@@ -17,6 +17,9 @@ public class TrainingRepository {
     private static final Logger logger = LoggerFactory.getLogger(TrainingRepository.class);
     private final JdbcClient jdbcClient;
 
+    private final WorkoutRepository workoutRepository;
+    private final ExerciseRepository exerciseRepository;
+
     private final String basicSqlMapping = "workout.id as workoutId, " +
             "workout.date as date, " +
             "workout.type as type, " +
@@ -36,8 +39,10 @@ public class TrainingRepository {
             "join exercise on workout_exercise.exercise = exercise.id " +
             "join set on workout_exercise.id = set.workout_exercise ";
 
-    public TrainingRepository(JdbcClient jdbcClient) {
+    public TrainingRepository(JdbcClient jdbcClient, WorkoutRepository workoutRepository, ExerciseRepository exerciseRepository) {
         this.jdbcClient = jdbcClient;
+        this.workoutRepository = workoutRepository;
+        this.exerciseRepository = exerciseRepository;
     }
 
     public List<Training> getAll() {

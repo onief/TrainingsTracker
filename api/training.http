@@ -1,0 +1,8 @@
+### Get All Trainings
+GET localhost:8080/api/training
+
+### Get First Trainings
+GET localhost:8080/api/training/1
+
+### Get not existing Training
+GET localhost:8080/api/training/1000000

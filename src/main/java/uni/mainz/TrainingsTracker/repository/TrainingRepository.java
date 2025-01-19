@@ -17,15 +17,41 @@ public class TrainingRepository {
     private static final Logger logger = LoggerFactory.getLogger(TrainingRepository.class);
     private final JdbcClient jdbcClient;
 
+    private final String basicSqlMapping = "workout.id as workoutId, " +
+            "workout.date as date, " +
+            "workout.type as type, " +
+            "workout_exercise.id as workoutExerciseId, " +
+            "workout_exercise.exercise as workoutExerciseExerciseId, " +
+            "exercise.id as exerciseId, " +
+            "exercise.name as exerciseName, " +
+            "exercise.description as exerciseDescription, " +
+            "exercise.pre_specified as exercisePreSpecified, " +
+            "set.id as setId, " +
+            "set.order_number as setOrderNumber, " +
+            "set.weight as setWeight, " +
+            "set.repetitions as setRepetitions, " +
+            "set.workout_exercise as setWorkoutExerciseId ";
+
+    private final String basicSqlJoin = "join workout_exercise on workout.id = workout_exercise.workout " +
+            "join exercise on workout_exercise.exercise = exercise.id " +
+            "join set on workout_exercise.id = set.workout_exercise ";
+
     public TrainingRepository(JdbcClient jdbcClient) {
         this.jdbcClient = jdbcClient;
     }
 
     public List<Training> getAll() {
-        return null;
+        return jdbcClient
+                .sql("select " + basicSqlMapping + "from workout " + basicSqlJoin)
+                .query(Training.class)
+                .list();
     }
 
-    public Optional<Training> getById(int id) {
-        return null;
+    public List<Training> getById(int id) {
+        return jdbcClient
+                .sql("select " + basicSqlMapping + "from workout " + basicSqlJoin + "where workout.id = ?")
+                .params(List.of(id))
+                .query(Training.class)
+                .list();
     }
 }

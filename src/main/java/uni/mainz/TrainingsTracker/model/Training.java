@@ -6,6 +6,6 @@ import java.util.Map;
 public record Training(
 
         Workout workout,
-        Map<Exercise, List<Set>> exercises
+        Map<ExerciseResponse, List<Set>> exercises
 
 ) { }

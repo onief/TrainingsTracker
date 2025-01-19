@@ -1,8 +1,7 @@
 package uni.mainz.TrainingsTracker.model;
 
-public record Exercise(
+public record ExerciseResponse(
 
-        int id,                 // unnecessary?
         String name,
         String description,
         boolean pre_specified

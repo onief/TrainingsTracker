@@ -38,4 +38,6 @@ public class WorkoutController {
         }
         return result.get();
     }
+
+    // Inheritance? Controller and Repository superclass?
 }

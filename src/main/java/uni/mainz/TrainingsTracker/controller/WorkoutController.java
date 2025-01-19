@@ -2,14 +2,15 @@ package uni.mainz.TrainingsTracker.controller;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
 import uni.mainz.TrainingsTracker.exception.NotFoundException;
+import uni.mainz.TrainingsTracker.model.WorkoutRequest;
 import uni.mainz.TrainingsTracker.model.WorkoutResponse;
+import uni.mainz.TrainingsTracker.model.WorkoutType;
 import uni.mainz.TrainingsTracker.repository.WorkoutRepository;
 
+import java.sql.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -24,11 +25,6 @@ public class WorkoutController {
         this.workoutRepository = workoutRepository;
     }
 
-    @GetMapping("")
-    public List<WorkoutResponse> getAll() {
-        return workoutRepository.getAll();
-    }
-
     @GetMapping("/{id}")
     public WorkoutResponse getById(@PathVariable int id) {
         Optional<WorkoutResponse> result = workoutRepository.getById(id);
@@ -39,5 +35,30 @@ public class WorkoutController {
         return result.get();
     }
 
-    // Inheritance? Controller and Repository superclass?
+    @GetMapping("")
+    public List<WorkoutResponse> getByParams(@RequestParam(value="date", required=false) Date date, @RequestParam(value="type", required=false) WorkoutType type) {
+        if (date == null && type == null) {
+            return workoutRepository.getAll();
+        } else if (date == null && type != null) {
+            return workoutRepository.getByParams(type);
+        } else if (date != null && type == null) {
+            return workoutRepository.getByParams(date);
+        } else {
+            return workoutRepository.getByParams(date, type);
+        }
+    }
+
+    @PostMapping("")
+    @ResponseStatus(HttpStatus.METHOD_NOT_ALLOWED)
+    public void create(@RequestBody WorkoutRequest workoutRequest) {}
+
+    @PutMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void update(@RequestBody WorkoutRequest workoutRequest, @PathVariable int id) {
+        workoutRepository.update(workoutRequest, id);
+    }
+
+    @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.METHOD_NOT_ALLOWED)
+    public void delete(@PathVariable int id) {}
 }

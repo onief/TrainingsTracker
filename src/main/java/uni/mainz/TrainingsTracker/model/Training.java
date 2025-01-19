@@ -8,7 +8,6 @@ import java.util.Map;
 
 public record Training(
 
-        WorkoutResponse workout,
-        Map<ExerciseResponse, List<Set>> exercises
+        // TODO
 
 ) { }

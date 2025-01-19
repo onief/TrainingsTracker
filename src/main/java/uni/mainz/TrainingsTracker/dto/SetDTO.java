@@ -1,17 +1,13 @@
-package uni.mainz.TrainingsTracker.model;
+package uni.mainz.TrainingsTracker.dto;
 
 import jakarta.validation.constraints.Positive;
 
-@Deprecated
-public record Set(
+public record SetDTO(
 
-        int id,
         @Positive
         int order_number,
         @Positive
         int weight,
         @Positive
-        int repetitions,
-        int workout_exercise
-
+        int repetitions
 ) { }

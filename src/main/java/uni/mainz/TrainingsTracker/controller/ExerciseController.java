@@ -7,8 +7,8 @@ import org.springframework.web.bind.annotation.*;
 import uni.mainz.TrainingsTracker.exception.ConflictException;
 import uni.mainz.TrainingsTracker.exception.PreSpecifiedException;
 import uni.mainz.TrainingsTracker.exception.NotFoundException;
-import uni.mainz.TrainingsTracker.model.ExerciseRequest;
-import uni.mainz.TrainingsTracker.model.ExerciseResponse;
+import uni.mainz.TrainingsTracker.dto.ExerciseRequest;
+import uni.mainz.TrainingsTracker.dto.ExerciseResponse;
 import uni.mainz.TrainingsTracker.repository.ExerciseRepository;
 
 import java.util.List;

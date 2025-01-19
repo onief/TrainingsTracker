@@ -4,7 +4,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.server.ResponseStatusException;
+import uni.mainz.TrainingsTracker.exception.ConflictException;
+import uni.mainz.TrainingsTracker.exception.PreSpecifiedException;
+import uni.mainz.TrainingsTracker.exception.NotFoundException;
 import uni.mainz.TrainingsTracker.model.ExerciseRequest;
 import uni.mainz.TrainingsTracker.model.ExerciseResponse;
 import uni.mainz.TrainingsTracker.repository.ExerciseRepository;
@@ -23,17 +25,13 @@ public class ExerciseController {
         this.exerciseRepository = exerciseRepository;
     }
 
-    private Optional<ExerciseResponse> getExerciseByIdentifier(String identifier) {
-        Optional<ExerciseResponse> result;
-
-        if (identifier.matches("\\d+")) {
-            int id = Integer.parseInt(identifier);
-            result = exerciseRepository.getById(id);
-        } else {
-            result = exerciseRepository.getByName(identifier);
+    private void throwResponses(int repositoryResponse, String identifier) {
+        if (repositoryResponse == 1) {
+            throw new NotFoundException("Exercise", identifier);
         }
-
-        return result;
+        if (repositoryResponse == 2) {
+            throw new PreSpecifiedException();
+        }
     }
 
     @GetMapping("")
@@ -42,12 +40,12 @@ public class ExerciseController {
     }
 
     @GetMapping("/{identifier}")
-    public ExerciseResponse getById(@PathVariable String identifier) {
+    public ExerciseResponse getByName(@PathVariable String identifier) {
 
-        Optional<ExerciseResponse> result = getExerciseByIdentifier(identifier);
+        Optional<ExerciseResponse> result = exerciseRepository.getByName(identifier);
 
         if (result.isEmpty()) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Exercise not found.");
+            throw new NotFoundException("Exercise", identifier);
         }
         return result.get();
     }
@@ -55,17 +53,21 @@ public class ExerciseController {
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("")
     public void create(@RequestBody ExerciseRequest exercise) {
-
+        if (exerciseRepository.create(exercise) > 0) {
+            throw new ConflictException("Exercise", exercise.name());
+        }
     }
 
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @PutMapping("/{identifier}")
     public void update(@RequestBody ExerciseRequest exercise, @PathVariable String identifier) {
-
+        int repositoryResponse = exerciseRepository.update(exercise, identifier);
+        throwResponses(repositoryResponse, identifier);
     }
 
     @DeleteMapping("/{identifier}")
     public void delete(@PathVariable String identifier) {
-        exerciseRepository.delete(identifier);
+        int repositoryResponse = exerciseRepository.delete(identifier);
+        throwResponses(repositoryResponse, identifier);
     }
 }

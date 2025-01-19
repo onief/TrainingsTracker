@@ -1,12 +1,53 @@
 ### Get All Exercises
 GET localhost:8080/api/exercise
 
-### Get Exercise by ID
-GET localhost:8080/api/exercise/1
-
-### Get Exercise by ID that does't exist
-GET localhost:8080/api/exercise/1000
-
 ### Get Exercise by Name
 GET localhost:8080/api/exercise/lat_pulldown_close
 
+### Get Exercise by Name that doesn't exist
+GET localhost:8080/api/exercise/clown
+
+### Create Exercise
+POST localhost:8080/api/exercise
+Content-Type: application/json
+
+{
+  "name": "bicycle",
+  "description": "cardio using the bicycle"
+}
+
+### Update Exercise
+PUT localhost:8080/api/exercise/bicycle
+Content-Type: application/json
+
+{
+  "name": "bicycle",
+  "description": "cardio using the electric bicycle"
+}
+
+### Update Exercise which doesn't exist
+PUT localhost:8080/api/exercise/clown
+Content-Type: application/json
+
+{
+  "name": "bicycle",
+  "description": "cardio using the electric bicycle"
+}
+
+### Update Exercise which shouldn't be updated
+PUT localhost:8080/api/exercise/lat_pulldown
+Content-Type: application/json
+
+{
+  "name": "bicycle",
+  "description": "cardio using the electric bicycle"
+}
+
+### Delete Exercise
+DELETE localhost:8080/api/exercise/bicycle
+
+### Delete Exercise which doesn't exist
+DELETE localhost:8080/api/exercise/clown
+
+### Delete Exercise which shouldn't be updated
+DELETE localhost:8080/api/exercise/lat_pulldown

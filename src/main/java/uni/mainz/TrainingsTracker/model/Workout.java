@@ -4,8 +4,8 @@ import java.sql.Date;
 
 public record Workout(
 
-        int id,         // unnecessary?
+        int id,
         Date date,
-        String type
+        WorkoutType type
 
 ) { }

@@ -4,7 +4,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.jdbc.core.simple.JdbcClient;
 import org.springframework.stereotype.Repository;
-import org.springframework.web.bind.annotation.RequestBody;
 import uni.mainz.TrainingsTracker.model.ExerciseRequest;
 import uni.mainz.TrainingsTracker.model.ExerciseResponse;
 
@@ -21,19 +20,22 @@ public class ExerciseRepository {
         this.jdbcClient = jdbcClient;
     }
 
+    private int checkData(String name) {
+        Optional<ExerciseResponse> current = getByName(name);
+        if (current.isEmpty()) {
+            return 1;
+        }
+        if (current.get().pre_specified()) {
+            return 2;
+        }
+        return 0;
+    }
+
     public List<ExerciseResponse> getAll() {
         return jdbcClient
                 .sql("SELECT * FROM exercise")
                 .query(ExerciseResponse.class)
                 .list();
-    }
-
-    public Optional<ExerciseResponse> getById(int id) {
-        return jdbcClient
-                .sql("SELECT * FROM exercise WHERE id = :id")
-                .param("id", id)
-                .query(ExerciseResponse.class)
-                .optional();
     }
 
     public Optional<ExerciseResponse> getByName(String name) {
@@ -44,15 +46,45 @@ public class ExerciseRepository {
                 .optional();
     }
 
-    public void create(ExerciseRequest exercise) {
+    public int create(ExerciseRequest exercise) {
+        if (getByName(exercise.name()).isPresent()) {
+            return 1;
+        }
+
+        jdbcClient
+                .sql("INSERT INTO exercise (name, description, pre_specified) VALUES (?, ?, ?)")
+                .params(List.of(exercise.name(), exercise.description(), false))
+                .update();
+
+        return 0;
 
     }
 
-    public void update(ExerciseRequest exercise) {
+    public int update(ExerciseRequest exercise, String name) {
+        int dataCheck = checkData(name);
+        if (dataCheck != 0) {
+            return dataCheck;
+        }
 
+        jdbcClient
+                .sql("UPDATE exercise SET name = ? , description = ? WHERE name = ?")
+                .params(List.of(exercise.name(), exercise.description(), name))
+                .update();
+
+        return 0;
     }
 
-    public void delete(String identifier) {
+    public int delete(String name) {
+        int dataCheck = checkData(name);
+        if (dataCheck != 0) {
+            return dataCheck;
+        }
 
+        jdbcClient
+                .sql("DELETE FROM exercise WHERE name = :name")
+                .param("name", name)
+                .update();
+
+        return 0;
     }
 }

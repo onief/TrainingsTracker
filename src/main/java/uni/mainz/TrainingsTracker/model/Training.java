@@ -1,13 +1,23 @@
 package uni.mainz.TrainingsTracker.model;
 
-import uni.mainz.TrainingsTracker.dto.ExerciseResponse;
-import uni.mainz.TrainingsTracker.dto.WorkoutResponse;
+import java.sql.Date;
 
-import java.util.List;
-import java.util.Map;
-
+// Straight up from hell
 public record Training(
 
-        // TODO
+        int workoutId,
+        Date date,
+        WorkoutType type,
+        int workoutExerciseId,
+        int workoutExerciseExerciseId,
+        int exerciseId,
+        String exerciseName,
+        String exerciseDescription,
+        boolean exercisePreSpecified,
+        int setId,
+        int setOrderNumber,
+        int setWeight,
+        int setRepetitions,
+        int setWorkoutExerciseId
 
 ) { }

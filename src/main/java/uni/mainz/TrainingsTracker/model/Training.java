@@ -5,7 +5,7 @@ import java.util.Map;
 
 public record Training(
 
-        Workout workout,
+        WorkoutResponse workout,
         Map<ExerciseResponse, List<Set>> exercises
 
 ) { }

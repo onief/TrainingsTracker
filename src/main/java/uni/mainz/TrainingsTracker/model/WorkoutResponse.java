@@ -2,7 +2,7 @@ package uni.mainz.TrainingsTracker.model;
 
 import java.sql.Date;
 
-public record Workout(
+public record WorkoutResponse(
 
         int id,
         Date date,

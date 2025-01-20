@@ -28,6 +28,7 @@ Endpoint to interact with the Trainings of DB (Examples in: **api/training.http*
 
 ## Database Architecture
 Database Schemas, Architectures and Constraints are defined by **postgres_docker/schema_init.sql**
+
 ![DB-Diagram](./postgres_docker/db.png)
 
 ## Improvements

@@ -1,6 +1,7 @@
 # TrainingsTracker
 RestAPI using Spring Boot to track Trainings Data. Automatically spins up a PostgresSQL
-Database using Docker as defined in **postgres_docker**.
+Database using Docker as defined in **postgres_docker**. Handles Exceptions meaningful HTTP 
+Responses.
 
 ## Endpoints
 
@@ -24,6 +25,10 @@ Endpoint to interact with the Trainings of DB (Examples in: **api/training.http*
 - **POST:** Create Training with DTO described by **src/main/.../TrainingRequest.java**
 - **PUT:** Not Implemented
 - **DELETE:** Delete Training by ID (`/id`)
+
+## Database Architecture
+Database Schemas, Architectures and Constraints are defined by **postgres_docker/schema_init.sql**
+![DB-Diagram](./postgres_docker/db.png)
 
 ## Improvements
 - Add Inheritance Hierarchy for Controller and Repository

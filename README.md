@@ -1,18 +1,29 @@
 # TrainingsTracker
-RestAPI using Spring Boot to track Trainings Data
+RestAPI using Spring Boot to track Trainings Data. Automatically spins up a PostgresSQL
+Database using Docker as defined in **postgres_docker**.
 
 ## Endpoints
 
 ### `/api/exercise`
-API to interact with the Exercises (Examples in: **api/exercise.http** )
-- **GET:** Get all Exercises **/** Get Excercise by Name (`/name`)
+Endpoint to interact with the Exercises of DB (Examples in: **api/exercise.http** )
+- **GET:** Get Exercise by Name (`/name`) **/** Get all Exercises
 - **POST:** Create Exercise with DTO described by **src/main/.../ExerciseRequest.java**
 - **PUT:** Update Exercise with DTO described by **src/main/ExerciseRequest.java** (`/name`)
 - **DELETE:** Delete Exercise by Name (`/name`)
 
 ### `/api/workout`
+Endpoint to interact with the Workouts of DB (Examples in: **api/workout.http** )
+- **GET:** Get Workout by ID (`/id`) **/** Get all Workouts, filter by name or type as Request Parameters 
+- **POST:** Create Workout with DTO described by **src/main/.../WorkoutRequest.java**
+- **PUT:** Update Workout with DTO described by **src/main/WorkoutRequest.java** (`/name`)
+- **DELETE:** Delete Workout by ID (`/id`)
 
 ### `/api/training`
+Endpoint to interact with the Trainings of DB (Examples in: **api/training.http** )
+- **GET:** Get Training by ID (`/id`) **/** Get all Trainings, filter by name or type as Request Parameters
+- **POST:** Create Training with DTO described by **src/main/.../TrainingRequest.java**
+- **PUT:** Not Implemented
+- **DELETE:** Delete Training by ID (`/id`)
 
 ## Improvements
 - Add Inheritance Hierarchy for Controller and Repository

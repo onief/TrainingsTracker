@@ -86,7 +86,6 @@ public class TrainingController {
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("")
     public void create(@RequestBody TrainingRequest trainingRequest) {
-        WorkoutRequest workout = trainingRequest.workout();
         Map<String, List<SetDTO>> exercises = trainingRequest.exercises();
 
         // Data Integrity should be handled in a Service Object
@@ -119,6 +118,8 @@ public class TrainingController {
 
     @DeleteMapping("/{id}")
     public void delete(@PathVariable int id) {
-        trainingRepository.delete(id);
+        if (trainingRepository.delete(id) == 1) {
+            throw new NotFoundException("Workout", String.valueOf(id));
+        }
     }
 }

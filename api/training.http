@@ -50,4 +50,4 @@ Content-Type: application/json
 }
 
 ### Delete a Training
-DELETE localhost:8080/api/training/10
+DELETE localhost:8080/api/training/13

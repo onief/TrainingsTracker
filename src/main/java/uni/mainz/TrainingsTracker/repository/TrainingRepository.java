@@ -109,7 +109,7 @@ public class TrainingRepository {
                 .list();
     }
 
-    public void create(TrainingRequest trainingRequest) {
+    public int create(TrainingRequest trainingRequest) {
         WorkoutRequest workout = trainingRequest.workout();
         Map<String, List<SetDTO>> exercises = trainingRequest.exercises();
 
@@ -139,13 +139,34 @@ public class TrainingRepository {
                         .update();
             }
         }
-
-
+        return 0;
     }
 
-    public void delete(int id) {
+    public int delete(int id) {
 
-        int workoutCode = workoutRepository.delete(id);
-        logger.info(String.valueOf(workoutCode));
+        if (getById(id).isEmpty()) {
+            return 1;
+        }
+
+        List<Integer> workoutExercisesToBeDeleted = jdbcClient
+                .sql("select id from workout_exercise where workout = :id")
+                .param("id", id)
+                .query(Integer.class)
+                .list();
+
+        for (Integer workoutExerciseId : workoutExercisesToBeDeleted) {
+            jdbcClient
+                    .sql("delete from set where workout_exercise = :workoutExerciseId")
+                    .param("workoutExerciseId", workoutExerciseId)
+                    .update();
+
+            jdbcClient
+                    .sql("delete from workout_exercise where id = :id")
+                    .param("id", workoutExerciseId)
+                    .update();
+        }
+        workoutRepository.delete(id);
+
+        return 0;
     }
 }

@@ -27,8 +27,8 @@ public class TrainingRepository {
     private static final Logger logger = LoggerFactory.getLogger(TrainingRepository.class);
     private final JdbcClient jdbcClient;
 
-    public final WorkoutRepository workoutRepository;
-    public final ExerciseRepository exerciseRepository;
+    private final WorkoutRepository workoutRepository;
+    private final ExerciseRepository exerciseRepository;
 
     private final String basicSqlMapping = "workout.id as workoutId, " +
             "workout.date as date, " +

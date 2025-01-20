@@ -9,6 +9,7 @@ import uni.mainz.TrainingsTracker.dto.*;
 import uni.mainz.TrainingsTracker.exception.NotFoundException;
 import uni.mainz.TrainingsTracker.model.Training;
 import uni.mainz.TrainingsTracker.model.WorkoutType;
+import uni.mainz.TrainingsTracker.repository.ExerciseRepository;
 import uni.mainz.TrainingsTracker.repository.TrainingRepository;
 
 import java.sql.Date;
@@ -22,9 +23,11 @@ public class TrainingController {
 
     private static final Logger logger = LoggerFactory.getLogger(TrainingController.class);
     private final TrainingRepository trainingRepository;
+    private final ExerciseRepository exerciseRepository;
 
-    public TrainingController(TrainingRepository trainingRepository) {
+    public TrainingController(TrainingRepository trainingRepository, ExerciseRepository exerciseRepository) {
         this.trainingRepository = trainingRepository;
+        this.exerciseRepository = exerciseRepository;
     }
 
     // Should be handled in a Service Object
@@ -88,7 +91,7 @@ public class TrainingController {
 
         // Data Integrity should be handled in a Service Object
         for (String exerciseId : exercises.keySet()) {
-            if (trainingRepository.exerciseRepository.getByName(exerciseId).isEmpty()) {
+            if (exerciseRepository.getByName(exerciseId).isEmpty()) {
                 throw new NotFoundException("Exercise", exerciseId);
             }
         }

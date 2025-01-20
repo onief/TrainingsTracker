@@ -116,7 +116,7 @@ public class TrainingController {
 
     @ResponseStatus(HttpStatus.NOT_FOUND)
     @PutMapping("/{id}")
-    public void update(@RequestBody @Valid TrainingRequest trainingRequest, @PathVariable int id) {
+    public void update(@Validated @RequestBody TrainingRequest trainingRequest, @PathVariable int id) {
         // TODO: Implement Put Request
     }
 

@@ -116,6 +116,25 @@ Content-Type: application/json
   }
 }
 
+### Put a Training gets Exception, not implemented
+POST localhost:8080/api/training/1
+Content-Type: application/json
+
+{
+  "workout": {
+    "date": "2025-01-17",
+    "type": "CARDIO"
+  },
+  "exercises": {
+    "bicycle" : [
+      {
+        "order_number": 1,
+        "weight": 0,
+        "repetitions": 15
+      }
+    ]
+  }
+}
 
 ### Delete a Training
-DELETE localhost:8080/api/training/25
+DELETE localhost:8080/api/training/32

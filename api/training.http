@@ -1,0 +1,140 @@
+### Get All Trainings
+GET localhost:8080/api/training
+
+### Get First Trainings
+GET localhost:8080/api/training/11
+
+### Get not existing Training
+GET localhost:8080/api/training/1000000
+
+### Get Training by date
+GET localhost:8080/api/training?date=2025-01-13
+
+### Get Training by type
+GET localhost:8080/api/training?type=PULL
+
+### Get Training by date and type
+GET localhost:8080/api/training?date=2025-01-13&&type=PULL
+
+### Get not existing Training
+GET localhost:8080/api/training?type=OTHER
+
+### Post a new Training (needs bench_press as exercise)
+POST localhost:8080/api/training
+Content-Type: application/json
+
+{
+  "workout": {
+    "date": "2025-01-17",
+    "type": "PUSH"
+  },
+  "exercises": {
+    "bench_press": [
+      {
+        "order_number": 1,
+        "weight": 60,
+        "repetitions": 8
+      },
+      {
+        "order_number": 2,
+        "weight": 55,
+        "repetitions": 8
+      },
+      {
+        "order_number": 3,
+        "weight": 55,
+        "repetitions": 7
+      }
+    ],
+    "bicycle" : [
+      {
+        "order_number": 1,
+        "weight": 0,
+        "repetitions": 15
+      }
+    ]
+  }
+}
+
+### Post a new Training whiches exercise does'nt exist gets Exception
+POST localhost:8080/api/training
+Content-Type: application/json
+
+{
+  "workout": {
+    "date": "2025-01-17",
+    "type": "CARDIO"
+  },
+  "exercises": {
+    "clown" : [
+      {
+        "order_number": 1,
+        "weight": 0,
+        "repetitions": 15
+      }
+    ]
+  }
+}
+
+### Post a new Training with wrong Sets gets Exception
+POST localhost:8080/api/training
+Content-Type: application/json
+
+{
+  "workout": {
+    "date": "2025-01-17",
+    "type": "CARDIO"
+  },
+  "exercises": {
+    "bicycle" : [
+      {
+        "order_number": 2,
+        "weight": 0,
+        "repetitions": 15
+      }
+    ]
+  }
+}
+
+### Post a new Training with negative weight gets Exception
+POST localhost:8080/api/training
+Content-Type: application/json
+
+{
+  "workout": {
+    "date": "2025-01-17",
+    "type": "CARDIO"
+  },
+  "exercises": {
+    "bicycle" : [
+      {
+        "order_number": 1,
+        "weight": -1,
+        "repetitions": 15
+      }
+    ]
+  }
+}
+
+### Put a Training gets Exception, not implemented
+POST localhost:8080/api/training/1
+Content-Type: application/json
+
+{
+  "workout": {
+    "date": "2025-01-17",
+    "type": "CARDIO"
+  },
+  "exercises": {
+    "bicycle" : [
+      {
+        "order_number": 1,
+        "weight": 0,
+        "repetitions": 15
+      }
+    ]
+  }
+}
+
+### Delete a Training
+DELETE localhost:8080/api/training/32

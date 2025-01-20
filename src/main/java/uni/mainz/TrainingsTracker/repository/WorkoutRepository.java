@@ -64,7 +64,12 @@ public class WorkoutRepository {
     }
 
     public int create(WorkoutRequest workoutRequest) {
-        return 1;
+        jdbcClient
+                .sql("INSERT INTO workout (date, type) VALUES (?, ?)")
+                .params(List.of(workoutRequest.date(), workoutRequest.type().toString()))
+                .update();
+
+        return 0;
     }
 
     public int update(WorkoutRequest workoutRequest, Integer id) {
@@ -75,7 +80,15 @@ public class WorkoutRepository {
     }
 
     public int delete(int id) {
-        return 1;
+        if (getById(id).isEmpty()) {
+            return 1;
+        }
+        jdbcClient
+                .sql("DELETE FROM workout WHERE id = :id")
+                .param("id", id)
+                .update();
+
+        return 0;
     }
 
 }

@@ -35,7 +35,7 @@ public class ExerciseController {
     }
 
     @GetMapping("")
-    public List<ExerciseResponse> getAllExercises() {
+    public List<ExerciseResponse> getAll() {
         return exerciseRepository.getAll();
     }
 

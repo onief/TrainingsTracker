@@ -80,6 +80,23 @@ public class ExerciseRepository {
             return dataCheck;
         }
 
+        Integer id = jdbcClient
+                .sql("SELECT id FROM exercise WHERE name = :name")
+                .param("name", name)
+                .query(Integer.class)
+                .single();
+
+        int hasDependentData = jdbcClient
+                .sql("SELECT id FROM workout_exercise where workout_exercise.exercise = :id")
+                .param("id", id)
+                .query(Integer.class)
+                .list()
+                .size();
+
+        if (hasDependentData != 0) {
+            return 3;
+        }
+
         jdbcClient
                 .sql("DELETE FROM exercise WHERE name = :name")
                 .param("name", name)

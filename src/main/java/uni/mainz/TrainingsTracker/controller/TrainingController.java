@@ -39,7 +39,7 @@ public class TrainingController {
 
         Map<String, List<Training>> exerciseTrainingMap = trainings
                 .stream()
-                .collect(Collectors.groupingBy(t -> t.exerciseName() ));
+                .collect(Collectors.groupingBy(Training::exerciseName));
         Map<String, List<SetDTO>> exercises = exerciseTrainingMap.entrySet()
                 .stream()
                 .collect(Collectors.toMap(Map.Entry::getKey,
@@ -116,7 +116,7 @@ public class TrainingController {
 
     @ResponseStatus(HttpStatus.NOT_FOUND)
     @PutMapping("/{id}")
-    public void update(@Validated @RequestBody TrainingRequest trainingRequest, @PathVariable int id) {
+    public void update(@Validated  @RequestBody TrainingRequest trainingRequest, @PathVariable int id) {
         // TODO: Implement Put Request
     }
 

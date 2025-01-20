@@ -10,8 +10,10 @@ import uni.mainz.TrainingsTracker.dto.TrainingResponse;
 import uni.mainz.TrainingsTracker.dto.WorkoutResponse;
 import uni.mainz.TrainingsTracker.exception.NotFoundException;
 import uni.mainz.TrainingsTracker.model.Training;
+import uni.mainz.TrainingsTracker.model.WorkoutType;
 import uni.mainz.TrainingsTracker.repository.TrainingRepository;
 
+import java.sql.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -47,18 +49,6 @@ public class TrainingController {
 
     }
 
-    @GetMapping("")
-    public List<TrainingResponse> getAll() {
-        List<Training> trainings = trainingRepository.getAll();
-        return trainings
-                .stream()
-                .collect(Collectors.groupingBy(Training::workoutId))
-                .values()
-                .stream()
-                .map(this::singleTrainingToTrainingResponse)
-                .toList();
-    }
-
     @GetMapping("/{id}")
     public TrainingResponse getById(@PathVariable int id) {
         List<Training> result = trainingRepository.getById(id);
@@ -67,6 +57,29 @@ public class TrainingController {
             throw new NotFoundException("Exercise", String.valueOf(id));
         }
         return singleTrainingToTrainingResponse(result);
+    }
+
+    @GetMapping("")
+    public List<TrainingResponse> getByParams(@RequestParam(value="date", required=false) Date date, @RequestParam(value="type", required=false) WorkoutType type) {
+        List<Training> trainings;
+
+        if (date == null && type == null) {
+            trainings = trainingRepository.getAll();
+        } else if (date == null && type != null) {
+            trainings = trainingRepository.getByParams(type);
+        } else if (date != null && type == null) {
+            trainings = trainingRepository.getByParams(date);
+        } else {
+            trainings = trainingRepository.getByParams(date, type);
+        }
+
+        return trainings
+                .stream()
+                .collect(Collectors.groupingBy(Training::workoutId))
+                .values()
+                .stream()
+                .map(this::singleTrainingToTrainingResponse)
+                .toList();
     }
 
     @ResponseStatus(HttpStatus.CREATED)

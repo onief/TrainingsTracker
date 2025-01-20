@@ -7,7 +7,9 @@ import org.springframework.stereotype.Repository;
 import uni.mainz.TrainingsTracker.controller.TrainingController;
 import uni.mainz.TrainingsTracker.dto.TrainingResponse;
 import uni.mainz.TrainingsTracker.model.Training;
+import uni.mainz.TrainingsTracker.model.WorkoutType;
 
+import java.sql.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -46,6 +48,9 @@ public class TrainingRepository {
     }
 
     public List<Training> getAll() {
+        if (workoutRepository.getAll().isEmpty()) {
+            return List.of();
+        }
         return jdbcClient
                 .sql("select " + basicSqlMapping + "from workout " + basicSqlJoin)
                 .query(Training.class)
@@ -53,9 +58,45 @@ public class TrainingRepository {
     }
 
     public List<Training> getById(int id) {
+        if (workoutRepository.getById(id).isEmpty()) {
+            return List.of();
+        }
         return jdbcClient
                 .sql("select " + basicSqlMapping + "from workout " + basicSqlJoin + "where workout.id = ?")
                 .params(List.of(id))
+                .query(Training.class)
+                .list();
+    }
+
+    public List<Training> getByParams(WorkoutType type) {
+        if (workoutRepository.getByParams(type).isEmpty()) {
+            return List.of();
+        }
+        return jdbcClient
+                .sql("select " + basicSqlMapping + "from workout " + basicSqlJoin + "where workout.type = :type")
+                .param("type", type.toString())
+                .query(Training.class)
+                .list();
+    }
+
+    public List<Training> getByParams(Date date) {
+        if (workoutRepository.getByParams(date).isEmpty()) {
+            return List.of();
+        }
+        return jdbcClient
+                .sql("select " + basicSqlMapping + "from workout " + basicSqlJoin + "where workout.date = :date")
+                .param("date", date)
+                .query(Training.class)
+                .list();
+    }
+
+    public List<Training> getByParams(Date date, WorkoutType type) {
+        if (workoutRepository.getByParams(date).isEmpty()) {
+            return List.of();
+        }
+        return jdbcClient
+                .sql("select " + basicSqlMapping + "from workout " + basicSqlJoin + "where workout.type = ? and workout.date = ?")
+                .params(List.of(type.toString(), date))
                 .query(Training.class)
                 .list();
     }

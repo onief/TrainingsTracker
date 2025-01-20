@@ -6,3 +6,15 @@ GET localhost:8080/api/training/1
 
 ### Get not existing Training
 GET localhost:8080/api/training/1000000
+
+### Get Training by date
+GET localhost:8080/api/training?date=2025-01-13
+
+### Get Training by type
+GET localhost:8080/api/training?type=PULL
+
+### Get Training by date and type
+GET localhost:8080/api/training?date=2025-01-13&&type=PULL
+
+### Get not existing Training
+GET localhost:8080/api/training?type=OTHER

@@ -19,7 +19,7 @@ GET localhost:8080/api/training?date=2025-01-13&&type=PULL
 ### Get not existing Training
 GET localhost:8080/api/training?type=OTHER
 
-### Post a new Training
+### Post a new Training (needs bench_press as exercise)
 POST localhost:8080/api/training
 Content-Type: application/json
 

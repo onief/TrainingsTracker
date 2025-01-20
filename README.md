@@ -31,7 +31,7 @@ Database Schemas, Architectures and Constraints are defined by **postgres_docker
 
 ![DB-Diagram](./postgres_docker/db.png)
 
-## Improvements
+## Improvements/ToDOs
 - Add Inheritance Hierarchy for Controller and Repository
 - Remove Redundancy of JDBC queries
 - Add Service Layer for Trainings

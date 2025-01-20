@@ -2,10 +2,10 @@ package uni.mainz.TrainingsTracker.exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.server.ResponseStatusException;
 
-@ResponseStatus(HttpStatus.FORBIDDEN)
-public class PreSpecifiedException extends RuntimeException {
+public class PreSpecifiedException extends ResponseStatusException {
     public PreSpecifiedException() {
-        super("Cannot change pre-specified data.");
+        super(HttpStatus.FORBIDDEN, "Cannot change pre-specified data.");
     }
 }

@@ -2,24 +2,17 @@ package uni.mainz.TrainingsTracker.repository;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.http.HttpStatus;
 import org.springframework.jdbc.core.simple.JdbcClient;
 import org.springframework.stereotype.Repository;
-import org.springframework.web.server.ResponseStatusException;
-import uni.mainz.TrainingsTracker.controller.TrainingController;
 import uni.mainz.TrainingsTracker.dto.SetDTO;
 import uni.mainz.TrainingsTracker.dto.TrainingRequest;
-import uni.mainz.TrainingsTracker.dto.TrainingResponse;
 import uni.mainz.TrainingsTracker.dto.WorkoutRequest;
-import uni.mainz.TrainingsTracker.exception.ConflictException;
-import uni.mainz.TrainingsTracker.exception.NotFoundException;
 import uni.mainz.TrainingsTracker.model.Training;
 import uni.mainz.TrainingsTracker.model.WorkoutType;
 
 import java.sql.Date;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 
 @Repository
 public class TrainingRepository {
@@ -140,6 +133,11 @@ public class TrainingRepository {
             }
         }
         return 0;
+    }
+
+    public int update(TrainingRequest trainingRequest, int id) {
+        // TODO: Implement Put Request
+        return 1;
     }
 
     public int delete(int id) {

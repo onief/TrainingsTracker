@@ -5,3 +5,4 @@ RestAPI to track Trainings/Workout Data into a Database
 - Add Inheritance Hierarchy for Controller and Repository
 - Remove Redundancy of JDBC queries
 - Add Service Layer for Trainings
+- Add Put Method for TrainingsAPI

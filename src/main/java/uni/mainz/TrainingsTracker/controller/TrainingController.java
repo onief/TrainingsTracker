@@ -114,9 +114,11 @@ public class TrainingController {
         trainingRepository.create(trainingRequest);
     }
 
-    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
     @PutMapping("/{id}")
-    public void update(@RequestBody @Valid TrainingRequest trainingRequest, @PathVariable int id) {}
+    public void update(@RequestBody @Valid TrainingRequest trainingRequest, @PathVariable int id) {
+        // TODO: Implement Put Request
+    }
 
     @DeleteMapping("/{id}")
     public void delete(@PathVariable int id) {

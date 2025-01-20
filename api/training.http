@@ -45,9 +45,77 @@ Content-Type: application/json
         "weight": 55,
         "repetitions": 7
       }
+    ],
+    "bicycle" : [
+      {
+        "order_number": 1,
+        "weight": 0,
+        "repetitions": 15
+      }
     ]
   }
 }
 
+### Post a new Training whiches exercise does'nt exist gets Exception
+POST localhost:8080/api/training
+Content-Type: application/json
+
+{
+  "workout": {
+    "date": "2025-01-17",
+    "type": "CARDIO"
+  },
+  "exercises": {
+    "clown" : [
+      {
+        "order_number": 1,
+        "weight": 0,
+        "repetitions": 15
+      }
+    ]
+  }
+}
+
+### Post a new Training with wrong Sets gets Exception
+POST localhost:8080/api/training
+Content-Type: application/json
+
+{
+  "workout": {
+    "date": "2025-01-17",
+    "type": "CARDIO"
+  },
+  "exercises": {
+    "bicycle" : [
+      {
+        "order_number": 2,
+        "weight": 0,
+        "repetitions": 15
+      }
+    ]
+  }
+}
+
+### Post a new Training with negative weight gets Exception
+POST localhost:8080/api/training
+Content-Type: application/json
+
+{
+  "workout": {
+    "date": "2025-01-17",
+    "type": "CARDIO"
+  },
+  "exercises": {
+    "bicycle" : [
+      {
+        "order_number": 1,
+        "weight": -1,
+        "repetitions": 15
+      }
+    ]
+  }
+}
+
+
 ### Delete a Training
-DELETE localhost:8080/api/training/13
+DELETE localhost:8080/api/training/25

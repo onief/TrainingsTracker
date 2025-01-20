@@ -1,8 +1,10 @@
 package uni.mainz.TrainingsTracker.controller;
 
+import jakarta.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 import uni.mainz.TrainingsTracker.dto.*;
@@ -85,7 +87,7 @@ public class TrainingController {
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("")
-    public void create(@RequestBody TrainingRequest trainingRequest) {
+    public void create(@Validated @RequestBody TrainingRequest trainingRequest) {
         Map<String, List<SetDTO>> exercises = trainingRequest.exercises();
 
         // Data Integrity should be handled in a Service Object
@@ -99,7 +101,7 @@ public class TrainingController {
                     .map(SetDTO::order_number)
                     .sorted()
                     .toList();
-            if (order.getFirst() == 0) {
+            if (order.getFirst() != 1) {
                 throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "First Set must be 1.");
             }
             for (int i=0; i < order.size()-1; i++) {
@@ -114,7 +116,7 @@ public class TrainingController {
 
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @PutMapping("/{id}")
-    public void update(@RequestBody TrainingRequest trainingRequest, @PathVariable int id) {}
+    public void update(@RequestBody @Valid TrainingRequest trainingRequest, @PathVariable int id) {}
 
     @DeleteMapping("/{id}")
     public void delete(@PathVariable int id) {

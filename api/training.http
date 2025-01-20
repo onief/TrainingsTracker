@@ -2,7 +2,7 @@
 GET localhost:8080/api/training
 
 ### Get First Trainings
-GET localhost:8080/api/training/1
+GET localhost:8080/api/training/11
 
 ### Get not existing Training
 GET localhost:8080/api/training/1000000
@@ -18,3 +18,36 @@ GET localhost:8080/api/training?date=2025-01-13&&type=PULL
 
 ### Get not existing Training
 GET localhost:8080/api/training?type=OTHER
+
+### Post a new Training
+POST localhost:8080/api/training
+Content-Type: application/json
+
+{
+  "workout": {
+    "date": "2025-01-17",
+    "type": "PUSH"
+  },
+  "exercises": {
+    "bench_press": [
+      {
+        "order_number": 1,
+        "weight": 60,
+        "repetitions": 8
+      },
+      {
+        "order_number": 2,
+        "weight": 55,
+        "repetitions": 8
+      },
+      {
+        "order_number": 3,
+        "weight": 55,
+        "repetitions": 7
+      }
+    ]
+  }
+}
+
+### Delete a Training
+DELETE localhost:8080/api/training/10

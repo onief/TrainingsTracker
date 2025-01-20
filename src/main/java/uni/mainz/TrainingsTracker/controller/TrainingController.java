@@ -4,10 +4,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-import uni.mainz.TrainingsTracker.dto.SetDTO;
-import uni.mainz.TrainingsTracker.dto.TrainingRequest;
-import uni.mainz.TrainingsTracker.dto.TrainingResponse;
-import uni.mainz.TrainingsTracker.dto.WorkoutResponse;
+import org.springframework.web.server.ResponseStatusException;
+import uni.mainz.TrainingsTracker.dto.*;
 import uni.mainz.TrainingsTracker.exception.NotFoundException;
 import uni.mainz.TrainingsTracker.model.Training;
 import uni.mainz.TrainingsTracker.model.WorkoutType;
@@ -84,12 +82,40 @@ public class TrainingController {
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("")
-    public void create(@RequestBody TrainingRequest trainingRequest) {}
+    public void create(@RequestBody TrainingRequest trainingRequest) {
+        WorkoutRequest workout = trainingRequest.workout();
+        Map<String, List<SetDTO>> exercises = trainingRequest.exercises();
+
+        // Data Integrity should be handled in a Service Object
+        for (String exerciseId : exercises.keySet()) {
+            if (trainingRepository.exerciseRepository.getByName(exerciseId).isEmpty()) {
+                throw new NotFoundException("Exercise", exerciseId);
+            }
+        }
+        for (List<SetDTO> sets : exercises.values()) {
+            List<Integer> order = sets.stream()
+                    .map(SetDTO::order_number)
+                    .sorted()
+                    .toList();
+            if (order.getFirst() == 0) {
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "First Set must be 1.");
+            }
+            for (int i=0; i < order.size()-1; i++) {
+                if (order.get(i+1) - order.get(i) != 1) {
+                    throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Sets must be ordered ascending with diff of 1.");
+                }
+            }
+        }
+
+        trainingRepository.create(trainingRequest);
+    }
 
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @PutMapping("/{id}")
     public void update(@RequestBody TrainingRequest trainingRequest, @PathVariable int id) {}
 
     @DeleteMapping("/{id}")
-    public void delete(@RequestParam int id) {}
+    public void delete(@PathVariable int id) {
+        trainingRepository.delete(id);
+    }
 }

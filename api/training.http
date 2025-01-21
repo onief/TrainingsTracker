@@ -1,26 +1,34 @@
 ### Get All Trainings
 GET localhost:8080/api/training
+Authorization: Basic dXNlcjphcGlBY2Nlc3M=
 
 ### Get First Trainings
 GET localhost:8080/api/training/11
+Authorization: Basic dXNlcjphcGlBY2Nlc3M=
 
 ### Get not existing Training
 GET localhost:8080/api/training/1000000
+Authorization: Basic dXNlcjphcGlBY2Nlc3M=
 
 ### Get Training by date
 GET localhost:8080/api/training?date=2025-01-13
+Authorization: Basic dXNlcjphcGlBY2Nlc3M=
 
 ### Get Training by type
 GET localhost:8080/api/training?type=PULL
+Authorization: Basic dXNlcjphcGlBY2Nlc3M=
 
 ### Get Training by date and type
 GET localhost:8080/api/training?date=2025-01-13&&type=PULL
+Authorization: Basic dXNlcjphcGlBY2Nlc3M=
 
 ### Get not existing Training
 GET localhost:8080/api/training?type=OTHER
+Authorization: Basic dXNlcjphcGlBY2Nlc3M=
 
 ### Post a new Training (needs bench_press as exercise)
 POST localhost:8080/api/training
+Authorization: Basic dXNlcjphcGlBY2Nlc3M=
 Content-Type: application/json
 
 {
@@ -58,6 +66,7 @@ Content-Type: application/json
 
 ### Post a new Training whiches exercise does'nt exist gets Exception
 POST localhost:8080/api/training
+Authorization: Basic dXNlcjphcGlBY2Nlc3M=
 Content-Type: application/json
 
 {
@@ -78,6 +87,7 @@ Content-Type: application/json
 
 ### Post a new Training with wrong Sets gets Exception
 POST localhost:8080/api/training
+Authorization: Basic dXNlcjphcGlBY2Nlc3M=
 Content-Type: application/json
 
 {
@@ -98,6 +108,7 @@ Content-Type: application/json
 
 ### Post a new Training with negative weight gets Exception
 POST localhost:8080/api/training
+Authorization: Basic dXNlcjphcGlBY2Nlc3M=
 Content-Type: application/json
 
 {
@@ -117,7 +128,8 @@ Content-Type: application/json
 }
 
 ### Put a Training gets Exception, not implemented
-POST localhost:8080/api/training/1
+PUT localhost:8080/api/training/1
+Authorization: Basic dXNlcjphcGlBY2Nlc3M=
 Content-Type: application/json
 
 {
@@ -138,3 +150,4 @@ Content-Type: application/json
 
 ### Delete a Training
 DELETE localhost:8080/api/training/32
+Authorization: Basic dXNlcjphcGlBY2Nlc3M=

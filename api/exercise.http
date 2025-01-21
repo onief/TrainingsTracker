@@ -1,15 +1,19 @@
 ### Get All Exercises
 GET localhost:8080/api/exercise
+Authorization: Basic dXNlcjphcGlBY2Nlc3M=
 
 ### Get Exercise by Name
 GET localhost:8080/api/exercise/lat_pulldown_close
+Authorization: Basic dXNlcjphcGlBY2Nlc3M=
 
 ### Get Exercise by Name that doesn't exist
 GET localhost:8080/api/exercise/clown
+Authorization: Basic dXNlcjphcGlBY2Nlc3M=
 
 ### Create Exercise
 POST localhost:8080/api/exercise
 Content-Type: application/json
+Authorization: Basic dXNlcjphcGlBY2Nlc3M=
 
 {
   "name": "bicycle",
@@ -19,6 +23,7 @@ Content-Type: application/json
 ### Update Exercise
 PUT localhost:8080/api/exercise/bicycle
 Content-Type: application/json
+Authorization: Basic dXNlcjphcGlBY2Nlc3M=
 
 {
   "name": "bicycle",
@@ -28,6 +33,7 @@ Content-Type: application/json
 ### Update Exercise which doesn't exist
 PUT localhost:8080/api/exercise/clown
 Content-Type: application/json
+Authorization: Basic dXNlcjphcGlBY2Nlc3M=
 
 {
   "name": "bicycle",
@@ -37,6 +43,7 @@ Content-Type: application/json
 ### Update Exercise which shouldn't be updated
 PUT localhost:8080/api/exercise/lat_pulldown
 Content-Type: application/json
+Authorization: Basic dXNlcjphcGlBY2Nlc3M=
 
 {
   "name": "bicycle",
@@ -45,9 +52,12 @@ Content-Type: application/json
 
 ### Delete Exercise
 DELETE localhost:8080/api/exercise/bicycle
+Authorization: Basic dXNlcjphcGlBY2Nlc3M=
 
 ### Delete Exercise which doesn't exist
 DELETE localhost:8080/api/exercise/clown
+Authorization: Basic dXNlcjphcGlBY2Nlc3M=
 
 ### Delete Exercise which shouldn't be updated
 DELETE localhost:8080/api/exercise/lat_pulldown
+Authorization: Basic dXNlcjphcGlBY2Nlc3M=

@@ -31,6 +31,10 @@ Database Schemas, Architectures and Constraints are defined by **postgres_docker
 
 ![DB-Diagram](./postgres_docker/db.png)
 
+## Authentication
+Basic Authentication for every API endpoint is implemented. User and Password need to be
+specified in **application.properties**.
+
 ## Improvements/ToDOs
 - Add Inheritance Hierarchy for Controller and Repository
 - Remove Redundancy of JDBC queries

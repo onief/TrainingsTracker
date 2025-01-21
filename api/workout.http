@@ -1,23 +1,30 @@
 ### Get All Workouts
 GET localhost:8080/api/workout
+Authorization: Basic dXNlcjphcGlBY2Nlc3M=
 
 ### Get First Workout
 GET localhost:8080/api/workout/1
+Authorization: Basic dXNlcjphcGlBY2Nlc3M=
 
 ### Get Workouts by date
 GET localhost:8080/api/workout?date=2025-01-13
+Authorization: Basic dXNlcjphcGlBY2Nlc3M=
 
 ### Get Workouts by type
 GET localhost:8080/api/workout?type=PULL
+Authorization: Basic dXNlcjphcGlBY2Nlc3M=
 
 ### Get Workouts by type and date
 GET localhost:8080/api/workout?date=2025-01-13&&type=PULL
+Authorization: Basic dXNlcjphcGlBY2Nlc3M=
 
 ### Get Workouts by not existing returns only empty
 GET localhost:8080/api/workout?date=2024-01-12
+Authorization: Basic dXNlcjphcGlBY2Nlc3M=
 
 ### Post single Workout is not allowed
 POST localhost:8080/api/workout
+Authorization: Basic dXNlcjphcGlBY2Nlc3M=
 Content-Type: application/json
 
 {
@@ -27,6 +34,7 @@ Content-Type: application/json
 
 ### Update Workout Date
 PUT localhost:8080/api/workout/1
+Authorization: Basic dXNlcjphcGlBY2Nlc3M=
 Content-Type: application/json
 
 {
@@ -36,6 +44,7 @@ Content-Type: application/json
 
 ### Update Workout that doesn't exist
 PUT localhost:8080/api/workout/10000000
+Authorization: Basic dXNlcjphcGlBY2Nlc3M=
 Content-Type: application/json
 
 {
@@ -45,3 +54,4 @@ Content-Type: application/json
 
 ### Delete single Workout is not allowed
 DELETE localhost:8080/api/workout/1
+Authorization: Basic dXNlcjphcGlBY2Nlc3M=
